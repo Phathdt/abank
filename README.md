@@ -42,3 +42,8 @@ docker-compose up
 ## Usage
 
 check swagger at http://localhost:4000/swagger/index.html
+
+## Improve
+- add test layer
+- split server into api and worker for read/write purpose
+- add authen jwt
