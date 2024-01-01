@@ -14,6 +14,39 @@ type cacheStore struct {
 	client *redis.Client
 }
 
+func (s *cacheStore) GetUser(ctx context.Context, userId int) (*models.User, error) {
+	key := fmt.Sprintf("/users/%d", userId)
+
+	result, err := s.client.Get(ctx, key).Result()
+	if err == redis.Nil {
+		return nil, errors.New("not found")
+	} else if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	var user models.User
+	if err = json.Unmarshal([]byte(result), &user); err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	return &user, nil
+}
+
+func (s *cacheStore) SetUser(ctx context.Context, data *models.User) error {
+	key := fmt.Sprintf("/users/%d", data.Id)
+
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
+	if err = s.client.Set(ctx, key, bytes, time.Minute*60).Err(); err != nil {
+		return errors.WithStack(err)
+	}
+
+	return nil
+}
+
 func (s *cacheStore) GetAccount(ctx context.Context, accountId int) (*models.Account, error) {
 	key := fmt.Sprintf("/accounts/%d", accountId)
 

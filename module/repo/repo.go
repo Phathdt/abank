@@ -16,6 +16,8 @@ type SqlStorage interface {
 type CacheStorage interface {
 	GetAccount(ctx context.Context, accountId int) (*models.Account, error)
 	SetAccount(ctx context.Context, data *models.Account) error
+	GetUser(ctx context.Context, userId int) (*models.User, error)
+	SetUser(ctx context.Context, data *models.User) error
 }
 
 type repo struct {
@@ -40,7 +42,12 @@ func (r *repo) GetAccount(ctx context.Context, accountId int) (*models.Account, 
 }
 
 func (r *repo) GetUser(ctx context.Context, userId int) (*models.User, error) {
-	user, err := r.store.GetUser(ctx, userId)
+	user, err := r.cacheStore.GetUser(ctx, userId)
+	if err == nil {
+		return user, nil
+	}
+
+	user, err = r.store.GetUser(ctx, userId)
 	if err != nil {
 		return nil, err
 	}
@@ -53,6 +60,8 @@ func (r *repo) GetUser(ctx context.Context, userId int) (*models.User, error) {
 	user.AccountIds = lo.Map(accounts, func(item models.Account, index int) int {
 		return item.Id
 	})
+
+	_ = r.cacheStore.SetUser(ctx, user)
 
 	return user, nil
 }
