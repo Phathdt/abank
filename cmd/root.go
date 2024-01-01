@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"abank/module/banktransport/bankfiber"
+	"abank/module/transport/bankfiber"
 	"fmt"
 	"os"
 	"time"
@@ -39,7 +39,7 @@ var rootCmd = &cobra.Command{
 
 		logger := sctx.GlobalLogger().GetLogger("service")
 
-		time.Sleep(time.Second * 5)
+		time.Sleep(time.Second * 1)
 
 		if err := sc.Load(); err != nil {
 			logger.Fatal(err)

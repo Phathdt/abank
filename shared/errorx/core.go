@@ -1,5 +1,7 @@
 package errorx
 
+import "errors"
+
 var (
-// ErrCannotGetUser     = errors.New("cannot get user")
+	ErrCannotListAccounts = errors.New("cannot list accounts")
 )
