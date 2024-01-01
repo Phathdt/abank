@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"abank/module/banktransport/bankfiber"
 	"fmt"
 	"os"
 	"time"
@@ -47,6 +48,10 @@ var rootCmd = &cobra.Command{
 		fiberComp := sc.MustGet(common.KeyCompFiber).(fiberc.FiberComponent)
 
 		app := fiberComp.GetApp()
+
+		app.Get("/users/:user_id", bankfiber.GetUser(sc))
+		app.Get("/users/:user_id/accounts", bankfiber.GetUserAccount(sc))
+		app.Get("/accounts/:account_id", bankfiber.GetAccount(sc))
 
 		if err := app.Listen(fmt.Sprintf(":%d", fiberComp.GetPort())); err != nil {
 			logger.Fatal(err)
