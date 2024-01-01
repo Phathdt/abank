@@ -1,0 +1,100 @@
+definitions:
+  models.Account:
+    properties:
+      balance:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      account_ids:
+        items:
+          type: integer
+        type: array
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /accounts/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get account by given account ID.
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Account'
+      summary: get account by given account ID
+      tags:
+      - Account
+  /users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get user by given ID.
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: get user by given ID
+      tags:
+      - User
+  /users/{id}/accounts:
+    get:
+      consumes:
+      - application/json
+      description: Get accounts by given user ID.
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+      summary: get accounts by given user ID
+      tags:
+      - User
+swagger: "2.0"

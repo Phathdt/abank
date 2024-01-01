@@ -14,6 +14,15 @@ import (
 	"net/http"
 )
 
+// GetUserAccount func gets accounts by given user ID or 404 error.
+// @Description Get accounts by given user ID.
+// @Summary get accounts by given user ID
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param id path int true "Account ID"
+// @Success 200 {array} models.User
+// @Router /users/{id}/accounts [get]
 func GetUserAccount(sc sctx.ServiceContext) fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		type RequestParams struct {

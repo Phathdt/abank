@@ -3,6 +3,7 @@ package cmd
 import (
 	"abank/module/transport/bankfiber"
 	"fmt"
+	"github.com/gofiber/swagger"
 	"os"
 	"time"
 
@@ -16,6 +17,8 @@ import (
 	sctx "github.com/phathdt/service-context"
 
 	"github.com/spf13/cobra"
+
+	_ "abank/docs"
 )
 
 const (
@@ -31,6 +34,16 @@ func newServiceCtx() sctx.ServiceContext {
 	)
 }
 
+// @title Fiber Example API
+// @version 1.0
+// @description This is a sample swagger for Fiber
+// @termsOfService http://swagger.io/terms/
+// @contact.name API Support
+// @contact.email fiber@swagger.io
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:4000
+// @BasePath /
 var rootCmd = &cobra.Command{
 	Use:   serviceName,
 	Short: fmt.Sprintf("start %s", serviceName),
@@ -48,6 +61,8 @@ var rootCmd = &cobra.Command{
 		fiberComp := sc.MustGet(common.KeyCompFiber).(fiberc.FiberComponent)
 
 		app := fiberComp.GetApp()
+
+		app.Get("/swagger/*", swagger.HandlerDefault) // default
 
 		app.Get("/users/:user_id/accounts", bankfiber.GetUserAccount(sc))
 		app.Get("/users/:user_id", bankfiber.GetUser(sc))
