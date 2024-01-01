@@ -10,6 +10,7 @@ type SqlStorage interface {
 	ListAccount(ctx context.Context, userId int) ([]models.Account, error)
 	GetUser(ctx context.Context, userId int) (*models.User, error)
 	GetListAccount(ctx context.Context, cond map[string]interface{}) ([]models.Account, error)
+	GetAccount(ctx context.Context, accountId int) (*models.Account, error)
 }
 
 type CacheStorage interface {
@@ -18,6 +19,10 @@ type CacheStorage interface {
 type repo struct {
 	store      SqlStorage
 	cacheStore CacheStorage
+}
+
+func (r *repo) GetAccount(ctx context.Context, accountId int) (*models.Account, error) {
+	return r.store.GetAccount(ctx, accountId)
 }
 
 func (r *repo) GetUser(ctx context.Context, userId int) (*models.User, error) {

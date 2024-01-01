@@ -11,6 +11,23 @@ type sqlStore struct {
 	db *gorm.DB
 }
 
+func (s *sqlStore) GetAccount(ctx context.Context, accountId int) (*models.Account, error) {
+	var data models.Account
+
+	db := s.db.WithContext(ctx)
+
+	result := db.Where("id = ?", accountId).Limit(1).Find(&data)
+	if result.Error != nil {
+		return nil, errors.WithStack(result.Error)
+	}
+
+	if result.RowsAffected == 0 {
+		return nil, errors.WithStack(errors.New("not found"))
+	}
+
+	return &data, nil
+}
+
 func (s *sqlStore) GetListAccount(ctx context.Context, cond map[string]interface{}) ([]models.Account, error) {
 	var data []models.Account
 
