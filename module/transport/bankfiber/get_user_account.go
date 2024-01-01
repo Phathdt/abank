@@ -17,12 +17,12 @@ import (
 func GetUserAccount(sc sctx.ServiceContext) fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		type RequestParams struct {
-			UserId int `json:"user_id" query:"user_id" validate:"required,number"`
+			UserId int `params:"user_id" validate:"required,number"`
 		}
 
 		var data RequestParams
 
-		if err := ctx.QueryParser(&data); err != nil {
+		if err := ctx.ParamsParser(&data); err != nil {
 			panic(err)
 		}
 
