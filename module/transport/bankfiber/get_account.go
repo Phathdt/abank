@@ -38,11 +38,11 @@ func GetAccount(sc sctx.ServiceContext) fiber.Handler {
 		r := repo.NewRepo(store, cacheStore)
 
 		hdl := handlers.NewGetAccountHdl(r)
-		account, err := hdl.Response(ctx.Context(), data.AccountId)
+		user, err := hdl.Response(ctx.Context(), data.AccountId)
 		if err != nil {
 			panic(err)
 		}
 
-		return ctx.Status(http.StatusOK).JSON(core.SimpleSuccessResponse(account))
+		return ctx.Status(http.StatusOK).JSON(core.SimpleSuccessResponse(user))
 	}
 }
