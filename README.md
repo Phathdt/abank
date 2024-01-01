@@ -1,8 +1,14 @@
-# abank: Golang Authentication Service with OAuth and Dex IDP Support
+# abank
 
-## Description
-
-The abank project is an authentication service written in Golang, using PostgreSQL as the database, and Redis for storing session information. The project supports OAuth with Dex IDP, providing flexible and secure authentication capabilities.
+## What I got
+- this project using Golang latest v1.21
+- split service into transport, domain, handler, repo and storage
+- use Postgres for primary database
+- use Redis for caching and handle count today task of user
+- migration with `goose`
+- development code with docker, docker-compose and taskfile
+- build a optimize dockerfile
+- setup docker-compose with postgres, redis, server
 
 ## Getting Started
 

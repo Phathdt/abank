@@ -13,3 +13,14 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123123123
       POSTGRES_DB: abank
+
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      DB_DSN: postgresql://postgres:123123123@postgres-db:5432/abank?sslmode=disable
+      REDIS_URI: redis://redis-db:6379
+      APP_ENV: dev
+    ports:
+      - '4000:4000'

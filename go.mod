@@ -1,6 +1,6 @@
 module abank
 
-go 1.21.3
+go 1.21.5
 
 require (
 	github.com/go-playground/validator/v10 v10.16.0
@@ -11,6 +11,8 @@ require (
 	github.com/phathdt/service-context v0.0.0-20231219152340-83191903e4b1
 	github.com/pkg/errors v0.9.1
 	github.com/pressly/goose/v3 v3.17.0
+	github.com/redis/go-redis/v9 v9.3.1
+	github.com/samber/lo v1.39.0
 	github.com/spf13/cobra v1.8.0
 	gorm.io/gorm v1.25.5
 )
@@ -37,9 +39,7 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
-	github.com/redis/go-redis/v9 v9.3.1 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
-	github.com/samber/lo v1.39.0 // indirect
 	github.com/sethvargo/go-retry v0.2.4 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
